@@ -109,7 +109,7 @@ function update_zshrc {
   if grep -q "^ZSH_THEME=" "$zshrc_path"; then
     sed -i '/^ZSH_THEME=/s|^ZSH_THEME=.*|'"$theme"'|' "$zshrc_path"
   else
-    eecho "$theme" >> "$zshrc_path"
+    echo "$theme" >> "$zshrc_path"
   fi
 }
 
