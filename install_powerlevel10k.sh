@@ -105,11 +105,11 @@ function update_zshrc {
     echo "$theme" >> "$zshrc_path"
   fi
 
-  # Update the plugins in .zshrc
-  if grep -q "^plugins=" "$zshrc_path"; then
-    sed -i 's/^plugins=.*/'"$plugins"'/' "$zshrc_path"
+  # Check for existing ZSH_THEME line and update or add it
+  if grep -q "^ZSH_THEME=" "$zshrc_path"; then
+    sed -i '/^ZSH_THEME=/s|^ZSH_THEME=.*|'"$theme"'|' "$zshrc_path"
   else
-    echo "$plugins" >> "$zshrc_path"
+    echo "$theme" >> "$zshrc_path"
   fi
 }
 
