@@ -53,7 +53,7 @@ function install_fonts {
 # Function to install oh-my-zsh
 function install_oh_my_zsh {
   if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    RUNZSH=no KEEP_ZSHRC=yes sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+    RUNZSH=no KEEP_ZSHRC=yes CHSH=no sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
   fi
 }
 
@@ -98,18 +98,18 @@ function update_zshrc {
     backup_zshrc "$zshrc_path"
   fi
 
-  # Update the ZSH_THEME in .zshrc
-  if grep -q "^ZSH_THEME=" "$zshrc_path"; then
-    sed -i 's/^ZSH_THEME=".*"/'"$theme"'/' "$zshrc_path"
+  #  # Update the plugins in .zshrc
+  if grep -q "^plugins=" "$zshrc_path"; then
+    sed -i 's/^plugins=.*/'"$plugins"'/' "$zshrc_path"
   else
-    echo "$theme" >> "$zshrc_path"
+    echo "$plugins" >> "$zshrc_path"
   fi
 
   # Check for existing ZSH_THEME line and update or add it
   if grep -q "^ZSH_THEME=" "$zshrc_path"; then
     sed -i '/^ZSH_THEME=/s|^ZSH_THEME=.*|'"$theme"'|' "$zshrc_path"
   else
-    echo "$theme" >> "$zshrc_path"
+    eecho "$theme" >> "$zshrc_path"
   fi
 }
 
@@ -149,4 +149,4 @@ if [ "$SHELL" != "$(which zsh)" ]; then
 fi
 
 # Done
-echo "Installation complete! Please restart your terminal."
+echo "Installation complete!"
